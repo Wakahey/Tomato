@@ -61,7 +61,7 @@ class WebCamera:
         self.flag_paused = True
 
     def stop(self):
-        """Метод класса останавливающий закрывающий поток камеры"""
+        """Метод класса закрывающий поток камеры"""
         self.showing_frames = False
         if self.cap:
             self.cap.release()
