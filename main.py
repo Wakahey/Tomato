@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter_webcam import webcam
+from webcam import Box
 import cv2
 import imutils
 
@@ -24,7 +24,7 @@ class ProductionGUI:
         self.stop_button.pack(side='left', padx=10, pady=5)
 
         # Создание видеоэлемента
-        self.video = webcam.Box(root, width=800, height=600)
+        self.video = Box(root, width=800, height=600)
 
         # Переменная для хранения состояния видео
         self.is_playing = False
