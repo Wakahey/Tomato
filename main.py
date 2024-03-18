@@ -7,7 +7,7 @@ import imutils
 class ProductionGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Система технического зрения")
+        self.root.title("Система технического зрения для выявления ")
 
         # Создание фрейма для кнопок
         self.button_frame = tk.Frame(self.root)
@@ -30,7 +30,7 @@ class ProductionGUI:
         self.is_playing = False
 
         # Задание размера окна
-        self.root.geometry("800x600")
+        self.root.geometry("1500x900")
 
     def start_video(self):
         # Начать воспроизведение видео
@@ -39,7 +39,7 @@ class ProductionGUI:
 
     def pause_video(self):
         # Приостановить воспроизведение видео
-        self.video.grid_forget()
+        self.video.set_paused()
         self.is_playing = False
 
     def stop_video(self):
