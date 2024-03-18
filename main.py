@@ -1,12 +1,53 @@
-from fastapi import FastAPI
-import uvicorn
+import tkinter as tk
+from tkinter import ttk
+from tkinter_webcam import webcam
+import cv2
+import imutils
 
-app = FastAPI()
+class ProductionGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Система технического зрения")
 
-@app.get("/lol")
-async def lol():
-    return "lol"
+        # Создание фрейма для кнопок
+        self.button_frame = tk.Frame(self.root)
+        self.button_frame.pack()
 
+        # Создание кнопок
+        self.start_button = ttk.Button(self.button_frame, text="Старт", command=self.start_video)
+        self.start_button.pack(side='left', padx=10, pady=5)
 
-if __name__ == '__main__':
-    uvicorn.run("main:app", reload=True)
+        self.pause_button = ttk.Button(self.button_frame, text="Пауза", command=self.pause_video)
+        self.pause_button.pack(side='left', padx=10, pady=5)
+
+        self.stop_button = ttk.Button(self.button_frame, text="Стоп", command=self.stop_video)
+        self.stop_button.pack(side='left', padx=10, pady=5)
+
+        # Создание видеоэлемента
+        self.video = webcam.Box(root, width=800, height=600)
+
+        # Переменная для хранения состояния видео
+        self.is_playing = False
+
+        # Задание размера окна
+        self.root.geometry("800x600")
+
+    def start_video(self):
+        # Начать воспроизведение видео
+        self.video.start()
+        self.is_playing = True
+
+    def pause_video(self):
+        # Приостановить воспроизведение видео
+        self.video.grid_forget()
+        self.is_playing = False
+
+    def stop_video(self):
+        # Остановить воспроизведение видео
+        self.video.stop()
+        self.is_playing = False
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = ProductionGUI(root)
+    root.mainloop()
