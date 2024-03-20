@@ -1,7 +1,7 @@
 import cv2
+import tkinter as tk
 from tkinter import Label
 from PIL import Image, ImageTk
-
 
 class WebCamera:
     """Класс для работы с камерой"""
@@ -50,11 +50,19 @@ class WebCamera:
     def start(self):
         """Метод класса запускающий поток камеры"""
         self.flag_paused = False
-        self.cap = cv2.VideoCapture(0)
-        self.label = Label(self.window, width=self.width, height=self.height)
-        self.label.pack()
-        self.showing_frames = True
-        self.show_frames()
+        try:
+            try:
+                self.cap = cv2.VideoCapture(0)
+            except Exception as exc:
+                self.window.insert(tk.END, "")
+
+            self.label = Label(self.window, width=self.width, height=self.height)
+            self.label.pack()
+            self.showing_frames = True
+            self.show_frames()
+        except Exception as exc:
+            self.window.insert(tk.END, "")
+
 
     def set_paused(self):
         """Метод класса останавливающий поток камеры"""

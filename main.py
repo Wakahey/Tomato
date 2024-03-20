@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter.scrolledtext import ScrolledText
 from webcam import WebCamera
+from PIL import ImageTk, Image
+import logging
 
 class ProductionGUI:
     """
@@ -10,8 +13,22 @@ class ProductionGUI:
         self.root = root
         self.root.title("Система технического зрения для выявления брака у продукции")
 
+        # # Установка изображения в качестве фона
+        # self.background_image = Image.open("static/background.jpg")
+        # self.background_image = self.background_image.resize((root.winfo_screenwidth(), root.winfo_screenheight()),
+        #                                                      Image.LANCZOS)
+        # self.background_photo = ImageTk.PhotoImage(self.background_image)
+        # self.background_label = tk.Label(self.root, image=self.background_photo)
+        # self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
         # Создание объекта класса для работы с камерой.
         self.video = WebCamera(root, width=800, height=600)
+
+        # Настройка логгирования
+        self.log_text = ScrolledText(self.root, width=30, height=10)
+        self.log_text.pack(expand=True, fill="both")
+        self.log_text.place(x=0, y=0)
+
 
         # Создание фрейма для кнопок.
         self.button_frame = tk.Frame(self.root)
@@ -20,7 +37,7 @@ class ProductionGUI:
         # Создание стилей для кнопок (цвет, шрифт и т.д).
         self.style = ttk.Style()
         self.style.configure(
-            'Start.TButton', foreground='black',
+            'Start.TButton', foreground='white',
             background='green', font=('Arial', 12, 'bold')
         )
         self.style.configure(
@@ -28,7 +45,7 @@ class ProductionGUI:
             background='orange', font=('Arial', 12, 'bold')
         )
         self.style.configure(
-            'Stop.TButton', foreground='black',
+            'Stop.TButton', foreground='white',
             background='red', font=('Arial', 12, 'bold')
         )
 
@@ -61,16 +78,22 @@ class ProductionGUI:
         # Начать воспроизведение видео.
         self.video.start()
         self.is_playing = True
+        self.log_text.insert(tk.END, "Видео начало воспроизведение\n")
+        self.log_text.see(tk.END)
 
     def pause_video(self):
         # Приостановить воспроизведение видео.
         self.video.set_paused()
         self.is_playing = False
+        self.log_text.insert(tk.END, "Видео приостановлено\n")
+        self.log_text.see(tk.END)
 
     def stop_video(self):
         # Остановить воспроизведение видео.
         self.video.stop()
         self.is_playing = False
+        self.log_text.insert(tk.END, "Видео остановлено\n")
+        self.log_text.see(tk.END)
 
 
 if __name__ == "__main__":
