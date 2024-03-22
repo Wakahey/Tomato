@@ -5,6 +5,29 @@ from webcam import WebCamera
 from PIL import ImageTk, Image
 import logging
 
+class SettingsGUI:
+    def __init__(self, parent):
+        self.parent = parent
+        self.root = tk.Toplevel(parent)
+        self.root.title("Настройки")
+
+        # Создание элементов интерфейса для выбора овощей
+        self.vegetable_label = ttk.Label(self.root, text="Выберите овощи для отбраковки:")
+        self.vegetable_label.pack()
+
+        self.tomato_checkbox = ttk.Checkbutton(self.root, text="Помидоры")
+        self.tomato_checkbox.pack()
+
+        self.cucumber_checkbox = ttk.Checkbutton(self.root, text="Огурцы")
+        self.cucumber_checkbox.pack()
+
+        self.ok_button = ttk.Button(self.root, text="Применить", command=self.apply_settings)
+        self.ok_button.pack()
+
+    def apply_settings(self):
+        # Здесь можно добавить логику обработки выбранных настроек
+        self.root.destroy()
+
 class ProductionGUI:
     """
     Основной класс для работы с интерфейсом.
@@ -68,11 +91,21 @@ class ProductionGUI:
         )
         self.stop_button.pack(side='left', padx=10, pady=5)
 
+        self.settings_frame = tk.Frame(self.root)
+        self.settings_frame.pack(anchor="ne")  # Размещение фрейма в правом верхнем углу
+
+        # Создание кнопки настроек
+        self.settings_button = ttk.Button(
+            self.settings_frame, text="Настройки",
+            command=self.open_settings
+        )
+        self.settings_button.pack(side="right", padx=20,)
+
         # Переменная для хранения состояния видео.
         self.is_playing = False
 
         # Задание размера окна
-        self.root.geometry("1500x900")
+        self.root.geometry("1300x900")
 
     def start_video(self):
         # Начать воспроизведение видео.
@@ -94,6 +127,10 @@ class ProductionGUI:
         self.is_playing = False
         self.log_text.insert(tk.END, "Видео остановлено\n")
         self.log_text.see(tk.END)
+
+    def open_settings(self):
+        # Открыть окно настроек
+        settings_gui = SettingsGUI(self.root)
 
 
 if __name__ == "__main__":
