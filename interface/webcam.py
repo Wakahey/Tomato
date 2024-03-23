@@ -23,7 +23,7 @@ class WebCamera:
         self.flag_paused = False
 
         # Загрузка предварительно обученной модели Pytorch YOLO
-        self.model = torch.hub.load('weights/best.pt', 'yolov5n', pretrained=True)
+        self.model = torch.load('weights/', 'best.pt')
 
     def get_box_info(self):
         """Получение информации по окну"""

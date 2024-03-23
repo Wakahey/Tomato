@@ -5,6 +5,7 @@ from webcam import WebCamera
 from PIL import ImageTk, Image
 import logging
 import torch
+from ultralytics import YOLO
 class SettingsGUI:
     def __init__(self, parent):
         self.parent = parent
@@ -45,7 +46,6 @@ class ProductionGUI:
         # self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Загрузка предварительно обученной модели Pytorch YOLO
-        self.model = torch.hub.load('weights/best.pt', 'yolov5n', pretrained=True)
 
 
         # Создание объекта класса для работы с камерой.
