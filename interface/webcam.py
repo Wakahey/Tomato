@@ -4,6 +4,9 @@ from tkinter import Label
 from PIL import Image, ImageTk
 import torch
 from ultralytics import YOLO
+import sys
+
+
 class WebCamera:
     """Класс для работы с камерой"""
 
@@ -19,13 +22,13 @@ class WebCamera:
         self.width = width
         self.height = height
         self.cap = None
+        self.neural_report = None
         self.label = None
         self.showing_frames = False
         self.flag_paused = False
 
         # Загрузка предварительно обученной модели Pytorch YOLO
-        self.model = YOLO("weights")
-
+        self.model = YOLO("weights/best.pt")
     def get_box_info(self):
         """Получение информации по окну"""
         print(f"Window: {self.window}")
@@ -41,14 +44,19 @@ class WebCamera:
                 tensor = torch.from_numpy(frame).permute(2, 0, 1).float().div(255.0).unsqueeze(0)
 
                 results = self.model(tensor)
+                result_data = results[0].probs.data
+                print(result_data)
+                spoiled_result = result_data[1].item()
+                print(spoiled_result)
+                normal_result = result_data[0].item()
+                print(normal_result)
+                if spoiled_result > 0.85:
+                    self.neural_report.config(text="Брак!")
+                elif normal_result > 0.85:
+                    self.neural_report.config(text="Нормально")
+                else:
+                    self.neural_report.config(text="Не понятно")
 
-                for box in results.xyxy[0]:
-                    x1, y1, x2, y2, conf, cls = box
-                    # Отрисовка рамки вокруг объектов
-                    cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (255, 0, 0), 2)
-                    # Добавление метки класса и уверенности
-                    cv2.putText(frame, f'{int(cls)}: {conf:.2f}', (int(x1), int(y1) - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
 
                 cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -76,6 +84,10 @@ class WebCamera:
 
             self.label = Label(self.window, width=self.width, height=self.height)
             self.label.pack()
+
+            self.neural_report = tk.Label(self.window, text="отображение", font=("Helvetica", 16))
+            self.neural_report.pack()
+
             self.showing_frames = True
             self.show_frames()
         except Exception as exc:
@@ -93,3 +105,12 @@ class WebCamera:
             self.cap.release()
         if self.label:
             self.label.destroy()
+            self.neural_report.destroy()
+
+    # def update_tomato_label(self, report_name):
+    #     if report_name:
+    #         # Получаем первый класс из списка (можно настроить логику выбора)
+    #         tomato_class = report_name
+    #         self.tomato_label.config(text=f"Tomato Class: {tomato_class}")
+    #     else:
+    #         self.tomato_label.config(text="No tomato detected")

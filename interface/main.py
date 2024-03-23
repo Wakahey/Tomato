@@ -56,6 +56,9 @@ class ProductionGUI:
         self.log_text.pack(expand=True, fill="both")
         self.log_text.place(x=0, y=0)
 
+        self.log_text_neural_network = ScrolledText(self.root, width=30, height=5)
+        self.log_text_neural_network.pack()
+        self.log_text_neural_network.place(y=350)
 
         # Создание фрейма для кнопок.
         self.button_frame = tk.Frame(self.root)
