@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import Label
 from PIL import Image, ImageTk
 import torch
+from ultralytics import YOLO
 class WebCamera:
     """Класс для работы с камерой"""
 
@@ -23,7 +24,7 @@ class WebCamera:
         self.flag_paused = False
 
         # Загрузка предварительно обученной модели Pytorch YOLO
-        self.model = torch.load('weights/', 'best.pt')
+        self.model = YOLO("weights")
 
     def get_box_info(self):
         """Получение информации по окну"""
