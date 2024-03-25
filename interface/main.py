@@ -22,6 +22,15 @@ class SettingsGUI:
         self.cucumber_checkbox = ttk.Checkbutton(self.root, text="Огурцы")
         self.cucumber_checkbox.pack()
 
+        self.potato_checkbox = ttk.Checkbutton(self.root, text="Картошка")
+        self.potato_checkbox.pack()
+
+        self.onion_checkbox = ttk.Checkbutton(self.root, text="Лук")
+        self.onion_checkbox.pack()
+
+        self.garlic_checkbox = ttk.Checkbutton(self.root, text="Чеснок")
+        self.garlic_checkbox.pack()
+
         self.ok_button = ttk.Button(self.root, text="Применить", command=self.apply_settings)
         self.ok_button.pack()
 
