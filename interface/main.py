@@ -13,25 +13,48 @@ class SettingsGUI:
         self.root.title("Настройки")
 
         # Создание элементов интерфейса для выбора овощей
-        self.vegetable_label = ttk.Label(self.root, text="Выберите овощи для отбраковки:")
+        self.vegetable_label = ttk.Label(
+            self.root,
+            text="Выберите овощи для отбраковки:"
+        )
         self.vegetable_label.pack()
 
-        self.tomato_checkbox = ttk.Checkbutton(self.root, text="Помидоры")
+        self.tomato_checkbox = ttk.Checkbutton(
+            self.root,
+            text="Помидоры"
+        )
         self.tomato_checkbox.pack()
 
-        self.cucumber_checkbox = ttk.Checkbutton(self.root, text="Огурцы")
+        self.cucumber_checkbox = ttk.Checkbutton(
+            self.root,
+            text="Огурцы"
+        )
         self.cucumber_checkbox.pack()
 
-        self.potato_checkbox = ttk.Checkbutton(self.root, text="Картошка")
+        self.potato_checkbox = ttk.Checkbutton(
+            self.root,
+            text="Картошка"
+        )
         self.potato_checkbox.pack()
 
-        self.onion_checkbox = ttk.Checkbutton(self.root, text="Лук")
+        self.onion_checkbox = ttk.Checkbutton(
+            self.root,
+            text="Лук"
+        )
         self.onion_checkbox.pack()
 
-        self.garlic_checkbox = ttk.Checkbutton(self.root, text="Чеснок")
+        self.garlic_checkbox = ttk.Checkbutton(
+            self.root,
+            text="Чеснок"
+        )
         self.garlic_checkbox.pack()
 
-        self.ok_button = ttk.Button(self.root, text="Применить", command=self.apply_settings)
+        self.ok_button = ttk.Button(
+            self.root,
+            text="Применить",
+            command=self.apply_settings
+        )
+
         self.ok_button.pack()
 
     def apply_settings(self):
@@ -45,17 +68,6 @@ class ProductionGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Система технического зрения для выявления брака у продукции")
-
-        # # Установка изображения в качестве фона
-        # self.background_image = Image.open("static/background.jpg")
-        # self.background_image = self.background_image.resize((root.winfo_screenwidth(), root.winfo_screenheight()),
-        #                                                      Image.LANCZOS)
-        # self.background_photo = ImageTk.PhotoImage(self.background_image)
-        # self.background_label = tk.Label(self.root, image=self.background_photo)
-        # self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
-
-        # Загрузка предварительно обученной модели Pytorch YOLO
-
 
         # Создание объекта класса для работы с камерой.
         self.video = WebCamera(root, width=800, height=600,)

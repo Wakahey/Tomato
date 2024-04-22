@@ -50,12 +50,13 @@ class WebCamera:
                 print(spoiled_result)
                 normal_result = result_data[0].item()
                 print(normal_result)
-                if spoiled_result > 0.85:
-                    self.neural_report.config(text="Брак!")
-                elif normal_result > 0.85:
-                    self.neural_report.config(text="Нормально")
-                else:
-                    self.neural_report.config(text="Не понятно")
+                self.neural_report.config(text="Брак!")
+                # if spoiled_result > 0.85:
+                #     self.neural_report.config(text="Брак!")
+                # elif normal_result > 0.85:
+                #     self.neural_report.config(text="Нормально")
+                # else:
+                #     self.neural_report.config(text="Не понятно")
 
 
 
